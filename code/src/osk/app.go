@@ -27,7 +27,7 @@ func main() {
 	router := gin.Default()
 
 	// 文件服务
-	router.Use(static.Serve("/files", static.LocalFile("./files", false)))
+	router.Use(static.Serve("/", static.LocalFile(core.Env.RunPath+"/console", true)))
 
 	// 跨域调用
 	corsConf := cors.Config{
@@ -40,7 +40,7 @@ func main() {
 	router.Use(cors.New(corsConf))
 
 	// 需要认证
-	authGroup := auth.BindAuthHandler(router, "/signin", "/auth")
+	authGroup := auth.BindAuthHandler(router, "/api/signin", "/api/auth")
 
 	route(authGroup)
 

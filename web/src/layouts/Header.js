@@ -66,7 +66,7 @@ class HeaderView extends PureComponent {
     }
     if (key === 'logout') {
       dispatch({
-        type: 'login/logout',
+        type: 'auth/signout',
       });
     }
   };
@@ -151,8 +151,8 @@ class HeaderView extends PureComponent {
   }
 }
 
-export default connect(({ user, global, setting, loading }) => ({
-  currentUser: user.currentUser,
+export default connect(({ account, global, setting, loading }) => ({
+  currentUser: account.currentUser,
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,

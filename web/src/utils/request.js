@@ -27,10 +27,12 @@ const checkStatus = response => {
     return response;
   }
   const errortext = codeMessage[response.status] || response.statusText;
+    /*
   notification.error({
     message: `请求错误 ${response.status}: ${response.url}`,
     description: errortext,
   });
+  */
   const error = new Error(errortext);
   error.name = response.status;
   error.response = response;
@@ -83,6 +85,12 @@ export default function request(
     credentials: 'include',
   };
   const newOptions = { ...defaultOptions, ...options };
+
+  newOptions.headers = {
+    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    ...newOptions.headers,
+  };
+
   if (
     newOptions.method === 'POST' ||
     newOptions.method === 'PUT' ||
@@ -136,7 +144,7 @@ export default function request(
         // @HACK
         /* eslint-disable no-underscore-dangle */
         window.g_app._store.dispatch({
-          type: 'login/logout',
+          type: 'auth/signout',
         });
         return;
       }

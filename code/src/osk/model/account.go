@@ -5,7 +5,8 @@ type Account struct {
 	UUID     string `gorm:"column:uuid;not null;unique" json:"uuid"`
 	Username string `gorm:"column:username;not null" json:"username"`
 	Password string `gorm:"column:password;not null" json:"password"`
-	NickName string `gorm:"column:name;not null" json:"name"`
+	Name     string `gorm:"column:name;not null" json:"name"`
+	Avatar   string `gorm:"column:avatar;not null" json:"avatar"`
 	Profile  string `gorm:"column:profile" json:"profile"`
 }
 

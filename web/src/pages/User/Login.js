@@ -7,9 +7,9 @@ import styles from './Login.less';
 
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
 
-@connect(({ login, loading }) => ({
-  login,
-  submitting: loading.effects['login/login'],
+@connect(({ auth, loading }) => ({
+  auth,
+  submitting: loading.effects['auth/signin'],
 }))
 class LoginPage extends Component {
   state = {
@@ -43,7 +43,7 @@ class LoginPage extends Component {
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'login/login',
+        type: 'auth/signin',
         payload: {
           ...values,
           type,
@@ -63,7 +63,7 @@ class LoginPage extends Component {
   );
 
   render() {
-    const { login, submitting } = this.props;
+    const { auth, submitting } = this.props;
     const { type, autoLogin } = this.state;
     return (
       <div className={styles.main}>
@@ -76,20 +76,20 @@ class LoginPage extends Component {
           }}
         >
           <Tab key="account" tab="账户密码登录">
-            {login.status === 'error' &&
-              login.type === 'account' &&
+            {auth.status === 'error' &&
+              auth.type === 'account' &&
               !submitting &&
-              this.renderMessage('账户或密码错误（admin/888888）')}
-            <UserName name="userName" placeholder="admin/user" />
+              this.renderMessage('账户或密码错误')}
+            <UserName name="username" placeholder="用户名" />
             <Password
               name="password"
-              placeholder="888888/123456"
+              placeholder="密码"
               onPressEnter={() => this.loginForm.validateFields(this.handleSubmit)}
             />
           </Tab>
           <Tab key="mobile" tab="手机号登录">
-            {login.status === 'error' &&
-              login.type === 'mobile' &&
+            {auth.status === 'error' &&
+              auth.type === 'mobile' &&
               !submitting &&
               this.renderMessage('验证码错误')}
             <Mobile name="mobile" />

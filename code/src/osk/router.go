@@ -8,8 +8,9 @@ import (
 
 func route(_group *gin.RouterGroup) {
 
+	account.HandleSignout("/signout", _group)
 	// /account
 	{
-		account.HandleSignout("/signout", _group)
+		account.HandleCurrent("/account/current", _group)
 	}
 }

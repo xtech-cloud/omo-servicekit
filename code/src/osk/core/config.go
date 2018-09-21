@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	default_host            string = ":18993"
+	default_host            string = ":80"
 	default_loglevel        string = "INFO"
 	default_logfile         string = "/var/log/osk.log"
 	default_gin_mode        string = "release"

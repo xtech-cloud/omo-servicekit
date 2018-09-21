@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"log"
 	"osk/core"
 	"osk/model"
 	"time"
@@ -110,13 +109,14 @@ func BindAuthHandler(_router *gin.Engine, _uri string, _group string) *gin.Route
 		core.Logger.Fatal("JWT Error:" + err.Error())
 	}
 	_router.POST(_uri, authMiddleware.LoginHandler)
-	_router.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
-		claims := jwt.ExtractClaims(c)
-		log.Printf("NoRoute claims: %#v\n", claims)
-		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})
-	})
+	/*
+		_router.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
+			claims := jwt.ExtractClaims(c)
+			c.JSON(404, gin.H{"code": 404, "message": "Page not found"})
+		})
+	*/
 	group := _router.Group(_group)
-	group.GET("/refresh_token", authMiddleware.RefreshHandler)
+	group.GET("/api/refresh_token", authMiddleware.RefreshHandler)
 	group.Use(authMiddleware.MiddlewareFunc())
 	return group
 }
